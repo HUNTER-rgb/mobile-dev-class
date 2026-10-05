@@ -1,0 +1,37 @@
+package com.example.mobile_dev_class
+
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.example.mobile_dev_class.databinding.ActivityMainBinding
+
+class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.saveButton.setOnClickListener {
+            val name = binding.tenantNameEditText.text.toString().trim()
+
+            if (name.isEmpty()) {
+                binding.tenantNameEditText.error = getString(R.string.tenant_name_required)
+                binding.tenantNameEditText.requestFocus()
+                return@setOnClickListener
+            }
+
+            val phone = binding.phoneEditText.text.toString().trim()
+            val rent = binding.rentEditText.text.toString().trim()
+
+            binding.tenant = Tenant(name, phone, rent)
+
+            binding.tenantNameEditText.text.clear()
+            binding.phoneEditText.text.clear()
+            binding.rentEditText.text.clear()
+            binding.tenantNameEditText.requestFocus()
+        }
+    }
+}
